@@ -1,5 +1,6 @@
 package ru.firston.ws.sts;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -10,6 +11,12 @@ import ru.firston.ws.sts.model.ServiceEnclosure;
 import ru.firston.ws.sts.model.ServiceTemplate;
 import ru.firston.ws.sts.model.Template;
 
+/**
+ * 
+ * @author Anton Arefyev
+ * @version 16.07.07 pre 16.06.24
+ *
+ */
 @Service
 public class ServiceTemplateImpl implements ServiceTemplate{
 	
@@ -30,7 +37,17 @@ public class ServiceTemplateImpl implements ServiceTemplate{
 	@Override
 	public Template delete(int id) throws Exception {
 		
-		return (Template) JdbcHandler.builder(ConnectionSTS.class, new Template(id)).executeDelete();
+		JdbcHandler jdbcHandler = JdbcHandler.builder(ConnectionSTS.class, new Template());
+		Template template = (Template) jdbcHandler.get(id);		
+		try{
+		  se_template.exists(template.getPath());
+		  se_template.delete();		  
+		}catch (FileNotFoundException e) {
+		  if(!template.getPath().equals(""))
+			template.setParam(ControllerSTS.ERROR, e.getMessage());
+		}		
+		jdbcHandler.executeDelete();
+		return template;
 	}
 
 	@Override
@@ -44,10 +61,18 @@ public class ServiceTemplateImpl implements ServiceTemplate{
 	@Override
 	public Template saveFile(int id, MultipartFile file) throws Exception {
 
-		Template template = new Template(id);		
+		JdbcHandler jdbcHandler = JdbcHandler.builder(ConnectionSTS.class, new Template());				
+		Template template = (Template) jdbcHandler.get(id);
+		try{
+		  se_template.exists(template.getPath());
+		  se_template.delete();
+		}catch (FileNotFoundException e) {
+		  if(!template.getPath().equals(""))
+		    template.setParam(ControllerSTS.ERROR, e.getMessage());
+		}		
 		if(se_template.save(file).isSave()){
 			template.setPath(se_template.getFullPath());
-			JdbcHandler.builder(ConnectionSTS.class, template).executeUpdate();
+			jdbcHandler.executeUpdate();
 		}else template.setParam(ControllerSTS.ERROR, se_template.getError());
 		
 		return template;

@@ -4,6 +4,12 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * 
+ * @author Anton Arefyev
+ * @version 16.06.24
+ *
+ */
 public interface ServiceTemplate {
 
 	public List<Template> list()throws Exception;

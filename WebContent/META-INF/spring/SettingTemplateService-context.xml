@@ -35,19 +35,19 @@
 	    	</property>
 		</bean>
 	
-	   	<bean id="ds" class="org.springframework.jdbc.datasource.DriverManagerDataSource" scope="singleton">
+	   	<bean id="ds" 
+	   		  class="org.springframework.jdbc.datasource.DriverManagerDataSource" 
+	   		  scope="singleton">
 	      <property name="url" value="${jdbc.url}"/> 
 	      <property name="username" value="${jdbc.username}"/>
 	      <property name="password" value="${jdbc.password}"/>     
-	      <property name="driverClassName" value="${jdbc.driverClassName}"/>
+	      <property name="driverClassName" value="${jdbc.driver.psql}"/>
 	   </bean>
 	   
-	    <bean id="multipartResolver"
-              class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        	<!-- max upload size in bytes -->
-        	<property name="maxUploadSize" value="20971520" /> <!-- 20MB -->
-        	<!-- max size of file in memory (in bytes) -->
-        	<property name="maxInMemorySize" value="1048576" /> <!-- 1MB -->
-      	</bean>	     
+         <bean id="multipartResolver" 
+         	   class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        	<property name="maxUploadSize" value="${file.maxUploadSize}" />
+        	<property name="maxInMemorySize" value="${file.maxInMemorySize}"/>
+      	</bean>
 	      
 </beans>

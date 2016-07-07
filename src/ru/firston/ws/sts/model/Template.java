@@ -99,6 +99,7 @@ public class Template implements ContentObject_rev160409{
 	@Override
 	public MapSqlParameterSource getQueryForInsert() {
 				
+		if(this.path == null) this.path = "";
 		return new MapSqlParameterSource(Utils.convertObjectToMap(this));
 	}
 
@@ -158,5 +159,16 @@ public class Template implements ContentObject_rev160409{
 		return (id == null && name == null && 
 				description == null && path == null && 
 				code_interface == null && params.size() == 0);
+	}
+	
+	@Override
+	public String toString() {
+		
+		return new StringBuffer().append("[Template: {id=").append(id)
+								 		   .append(", name=").append(name)
+								 		   .append(", description=").append(description)
+								 		   .append(", path=").append(path)
+								 		   .append(", code_interface=").append(code_interface)
+								 .append("}]").toString();
 	}
 }

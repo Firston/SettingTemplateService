@@ -3,6 +3,7 @@ package ru.firston.ws.sts.utils;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Date;
 
@@ -15,7 +16,7 @@ import ru.firston.ws.sts.model.ServiceEnclosure;
 /**
  * 
  * @author Anton Arefyev
- * @version 16.05.12
+ * @version 16.07.06 pre 16.05.12
  *
  */
 @Component
@@ -26,7 +27,12 @@ public class Enclosure implements ServiceEnclosure {
 	 * Статус сохранения файла.
 	 * Результат вызова метода ServiceAdmin.saveFile();
 	 */
-	private boolean isSave = false;	
+	private boolean isSave = false;
+	/**
+	 * Статус сохранения файла.
+	 * Результат вызова метода ServiceAdmin.saveFile();
+	 */
+	private boolean isDelete = false;
 	/**
 	 * Расположение копии сохраненого файла
 	 */
@@ -103,6 +109,28 @@ public class Enclosure implements ServiceEnclosure {
 		return getDir() + getFileName();
 	}
 	
+	@Override
+	public void exists(String fullPath) throws FileNotFoundException {
+		
+		File file = new File(fullPath);
+	    if (file.exists()){
+	    	this.dir = file.getParent() + "/";
+	    	this.fileName = file.getName();
+	    }else throw new FileNotFoundException(fullPath);
+	       	    
+	}
+	@Override
+	public Enclosure delete() {
+		
+		setDelete(new File(getFullPath()).delete());
+		return this;
+	}
+	public void setDelete(boolean isDelete) {
+		this.isDelete = isDelete;
+	}
+	public boolean isDelete() {
+		return isDelete;
+	}
 	
 	
 }

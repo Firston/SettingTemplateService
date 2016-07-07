@@ -8,6 +8,12 @@ import ru.firston.ms.api.ContentObject;
 import ru.firston.ms.api.an.DescriptionField;
 import ru.firston.ms.api.an.Ignore;
 
+/**
+ * 
+ * @author Anton Arefyev
+ * @version 16.06.23
+ *
+ */
 public final class Utils {
 
 	/**

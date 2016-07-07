@@ -27,7 +27,7 @@ import ru.firston.ws.sts.model.Template;
 /**
  * 
  * @author Anton Arefyev
- * @version 16.06.24
+ * @version 16.07.07 pre 16.06.24
  *
  */
 @EnableWebMvc

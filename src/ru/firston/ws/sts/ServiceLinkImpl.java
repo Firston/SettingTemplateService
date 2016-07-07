@@ -8,6 +8,12 @@ import ru.firston.ms.core.jdbc.JdbcHandler;
 import ru.firston.ws.sts.model.Link;
 import ru.firston.ws.sts.model.ServiceLink;
 
+/**
+ * 
+ * @author Anton Arefyev
+ * @version 16.06.24
+ *
+ */
 @Service
 public class ServiceLinkImpl implements ServiceLink{
 
